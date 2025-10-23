@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskManagement.API.Models;
 
+[Table("Users")]
 public class User
 {
     public Guid Id { get; set; }
@@ -16,6 +18,7 @@ public class User
     public string Email { get; set; } = string.Empty;
 
     [Required]
+    [MaxLength(500)]
     public string PasswordHash { get; set; } = string.Empty;
 
     public DateTime RegistrationDate { get; set; }
