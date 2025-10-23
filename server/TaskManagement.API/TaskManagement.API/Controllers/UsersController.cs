@@ -55,4 +55,24 @@ public class UsersController : ControllerBase
 
         return Ok(user);
     }
+
+    /// <summary>
+    /// Register a new user (Public endpoint)
+    /// </summary>
+    [HttpPost("register")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<UserDto>> Register([FromBody] RegisterDto registerDto)
+    {
+        try
+        {
+            var user = await _userService.RegisterAsync(registerDto);
+            return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
 }
