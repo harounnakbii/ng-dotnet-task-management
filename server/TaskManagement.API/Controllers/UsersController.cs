@@ -75,4 +75,16 @@ public class UsersController : ControllerBase
             return BadRequest(new { message = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Validate user credentials (Protected - Only IdentityServer)
+    /// </summary>
+    [HttpPost("validate")]
+    [Authorize(Policy = "IdentityServerOnly")]
+    [ProducesResponseType(typeof(UserValidationResult), StatusCodes.Status200OK)]
+    public async Task<ActionResult<UserValidationResult>> ValidateUser([FromBody] ValidateUserDto validateDto)
+    {
+        var result = await _userService.ValidateUserAsync(validateDto);
+        return Ok(result);
+    }
 }

@@ -52,6 +52,51 @@ public class UserService : IUserService
         return MapToDto(user);
     }
 
+    public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
+    {
+        var users = await _context.Users
+            .Where(u => u.IsActive)
+            .OrderBy(u => u.Name)
+            .ToListAsync();
+
+        return users.Select(MapToDto);
+    }
+
+    public async Task<UserValidationResult> ValidateUserAsync(ValidateUserDto validateDto)
+    {
+        var user = await _context.Users
+            .FirstOrDefaultAsync(u => u.Email == validateDto.Email && u.IsActive);
+
+        if (user == null)
+        {
+            return new UserValidationResult
+            {
+                IsValid = false,
+                ErrorMessage = "Invalid email or password"
+            };
+        }
+
+        // Verify password
+        var isPasswordValid = BCrypt.Net.BCrypt.Verify(validateDto.Password, user.PasswordHash);
+
+        if (!isPasswordValid)
+        {
+            return new UserValidationResult
+            {
+                IsValid = false,
+                ErrorMessage = "Invalid email or password"
+            };
+        }
+
+        return new UserValidationResult
+        {
+            IsValid = true,
+            UserId = user.Id,
+            Name = user.Name,
+            Email = user.Email
+        };
+    }
+
     private static UserDto MapToDto(User user)
     {
         return new UserDto

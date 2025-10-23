@@ -6,4 +6,6 @@ public interface IUserService
 {
     Task<UserDto?> GetUserByIdAsync(Guid id);
     Task<UserDto> RegisterAsync(RegisterDto registerDto);
+    Task<UserValidationResult> ValidateUserAsync(ValidateUserDto validateDto);
+    Task<IEnumerable<UserDto>> GetAllUsersAsync();
 }
