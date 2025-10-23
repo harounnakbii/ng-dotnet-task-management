@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/server/">
+    <Project Path="server/IdentityServer/IdentityServer.csproj" />
+    <Project Path="server/TaskManagement.API/TaskManagement.API.csproj" />
+  </Folder>
+</Solution>
