@@ -50,7 +50,7 @@ public static class Config
                 ClientId = "angular-client",
                 ClientName = "Angular Task Management",
 
-                AllowedGrantTypes = GrantTypes.Code,
+                AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                 RequireClientSecret = false, // SPA = public client
                 RequirePkce = true, // PKCE obligatoire pour SPA
                 
