@@ -25,7 +25,7 @@ public class UserValidationService
     /// <summary>
     /// Valide les credentials d'un utilisateur auprès de la Task API
     /// </summary>
-    public async Task<UserValidationResult?> ValidateUserAsync(string email, string password)
+    public async Task<UserValidationResult?> ValidateUserAsync(string username, string password)
     {
         try
         {
@@ -41,7 +41,7 @@ public class UserValidationService
             // 2. Préparer la requête de validation
             var validateDto = new
             {
-                Email = email,
+                Username = username,
                 Password = password
             };
 
@@ -68,16 +68,16 @@ public class UserValidationService
                     PropertyNameCaseInsensitive = true
                 });
 
-                _logger.LogInformation("User {Email} validated successfully", email);
+                _logger.LogInformation("User {Username} validated successfully", username);
                 return result;
             }
 
-            _logger.LogWarning("User validation failed for {Email}. Status: {Status}", email, response.StatusCode);
+            _logger.LogWarning("User validation failed for {Username}. Status: {Status}", username, response.StatusCode);
             return null;
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Error validating user {Email}", email);
+            _logger.LogError(ex, "Error validating user {Username}", username);
             return null;
         }
     }

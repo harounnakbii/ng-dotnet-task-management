@@ -65,7 +65,7 @@ public class UserService : IUserService
     public async Task<UserValidationResult> ValidateUserAsync(ValidateUserDto validateDto)
     {
         var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Email == validateDto.Email && u.IsActive);
+            .FirstOrDefaultAsync(u => (u.Name == validateDto.Username || u.Email == validateDto.Username) && u.IsActive);
 
         if (user == null)
         {
