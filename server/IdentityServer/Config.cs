@@ -55,7 +55,7 @@ public static class Config
                 RequirePkce = true, // PKCE obligatoire pour SPA
                 
                 // URLs Angular
-                RedirectUris = { "http://localhost:4200/auth/callback" },
+                RedirectUris = { "http://localhost:4200" },
                 PostLogoutRedirectUris = { "http://localhost:4200" },
                 AllowedCorsOrigins = { "http://localhost:4200" },
                 

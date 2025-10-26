@@ -1,0 +1,36 @@
+::ng-deep .p-password .p-inputtext {
+  border: none !important;
+  width: 100%;
+  box-shadow: none !important;
+}
+
+/* Espacement entre label et input */
+.flex.flex-col label {
+  margin-bottom: 0.5rem;
+}
+
+.flex.flex-col input,
+.flex.flex-col p-password,
+.flex.flex-col .relative {
+  margin-top: 0.5rem;
+}
+
+/* Espacement entre les champs du formulaire */
+.register-form > div > div {
+  margin-bottom: 1.5rem;
+}
+
+/* Espacement pour les messages d'erreur */
+p-message,
+small.error-message,
+small.text-primary,
+small.text-muted-color {
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* Espacement pour les inputs dans les p-password */
+::ng-deep .p-password {
+  margin-top: 0.5rem;
+  width: 100%;
+}

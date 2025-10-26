@@ -1,0 +1,79 @@
+<app-floating-configurator />
+<div
+    class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">
+    <div class="flex flex-col items-center justify-center">
+        <div
+            style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
+            <div class="w-full bg-surface-0 dark:bg-surface-900 py-20 px-8 sm:px-20" style="border-radius: 53px">
+                <div class="text-center mb-8">
+                    <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Register to Task
+                        Management App!</div>
+                    <span class="text-muted-color font-medium">Complete form to continue</span>
+                </div>
+
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+                    <div>
+                        <div class="flex flex-col mb-4 gap-1">
+                            <label for="name"
+                                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Name <span
+                                    class="required">*</span></label>
+                            <input pInputText formControlName="name" placeholder="Name" aria-label="name"
+                                [class.error]="isFieldInvalid('name')" />
+                            <p-message [hidden]="!isFieldInvalid('name')" severity="error" variant="simple"
+                                size="small">{{getFieldErrorMessage('name')}}</p-message>
+                        </div>
+                        <div class="flex flex-col flex-wrap gap-1">
+                            <label for="email"
+                                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email <span
+                                    class="required">*</span></label>
+                            <input pInputText formControlName="email" placeholder="Email" aria-label="email"
+                                [class.error]="isFieldInvalid('email')" />
+                            <p-message [hidden]="!isFieldInvalid('email')" severity="error" variant="simple"
+                                severity="error" size="small">{{getFieldErrorMessage('email')}}</p-message>
+                        </div>
+                        <div class="flex flex-col flex-wrap gap-1">
+                            <label for="confirmEmail"
+                                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Confirm
+                                email
+                                address <span class="required">*</span></label>
+                            <input pInputText formControlName="confirmEmail" placeholder="confirmEmail"
+                                aria-label="confirmEmail" [class.error]="isFieldInvalid('confirmEmail')" />
+                            <p-message [hidden]="!isFieldInvalid('confirmEmail')" severity="confirmEmail"
+                                variant="simple" severity="error"
+                                size="small">{{getFieldErrorMessage('confirmEmail')}}</p-message>
+                        </div>
+
+                        <div class="flex flex-col flex-wrap gap-1">
+                            <label for="password"
+                                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Password
+                                <span class="required">*</span></label>
+                            <p-password pInputText formControlName="password" [toggleMask]="true" placeholder="password"
+                                aria-label="password" [class.error]="isFieldInvalid('password')"></p-password>
+                            <p-message severity="password" variant="simple" [hidden]="!isFieldInvalid('password')"
+                                severity="error" size="small">{{getFieldErrorMessage('password')}}</p-message>
+                        </div>
+
+                        <div class="flex flex-col flex-wrap gap-1">
+                            <label for="confirmPassword"
+                                class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Confirm
+                                password
+                                <span class="required">*</span></label>
+
+                            <p-password pInputText formControlName="confirmPassword" placeholder="Confirm your password"
+                                [toggleMask]="true" aria-label="confirmPassword"
+                                [class.error]="isFieldInvalid('confirmPassword')"></p-password>
+
+                            <p-message [hidden]="!isFieldInvalid('confirmPassword')" severity="error" variant="simple"
+                                size="small">{{getFieldErrorMessage('confirmPassword')}}</p-message>
+                        </div>
+                        <div>
+                            <p-button label="Sign Up" styleClass="w-full" (click)="onSubmit()"
+                                [disabled]="registerForm.invalid"></p-button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

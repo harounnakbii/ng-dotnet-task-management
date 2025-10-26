@@ -87,4 +87,28 @@ public class UsersController : ControllerBase
         var result = await _userService.ValidateUserAsync(validateDto);
         return Ok(result);
     }
+
+    /// <summary>
+    /// Check if username is available
+    /// </summary>
+    [HttpGet("check-username/{username}")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(UsernameAvailabilityDto), StatusCodes.Status200OK)]
+    public async Task<ActionResult<UsernameAvailabilityDto>> CheckUsernameAvailability(string username)
+    {
+        var isAvailable = await _userService.IsUsernameAvailableAsync(username);
+        return Ok(new UsernameAvailabilityDto { IsAvailable = isAvailable });
+    }
+
+    /// <summary>
+    /// Check if email is available
+    /// </summary>
+    [HttpGet("check-email/{email}")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(EmailAvailabilityDto), StatusCodes.Status200OK)]
+    public async Task<ActionResult<EmailAvailabilityDto>> CheckEmailAvailability(string email)
+      {
+        var isAvailable = await _userService.IsEmailAvailableAsync(email);
+        return Ok(new EmailAvailabilityDto { IsAvailable = isAvailable });
+    }
 }

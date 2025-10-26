@@ -97,6 +97,16 @@ public class UserService : IUserService
         };
     }
 
+    public async Task<bool> IsUsernameAvailableAsync(string username)
+    {
+        return !await _context.Users.AnyAsync(u => u.Name.ToLower() == username.ToLower());
+    }
+
+    public async Task<bool> IsEmailAvailableAsync(string email)
+    {
+        return !await _context.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower());
+    }
+
     private static UserDto MapToDto(User user)
     {
         return new UserDto
