@@ -59,7 +59,7 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
                                 <span class="text-surface-600 dark:text-surface-200 lg:text-xl">Accumsan in nisl nisi scelerisque</span>
                             </span>
                         </a>
-                        <p-button label="Go to Dashboard" routerLink="/" />
+                        <p-button label="Go Back" routerLink="/" />
                     </div>
                 </div>
             </div>

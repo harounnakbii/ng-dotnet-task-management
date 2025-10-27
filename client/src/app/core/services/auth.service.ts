@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 export interface LoginCredentials {
   username: string;
@@ -24,6 +25,7 @@ export interface TokenResponse {
 export class AuthService {
   private http = inject(HttpClient);
   private oauthService = inject(OAuthService);
+  private router = inject(Router);
 
   private isAuthenticatedSubject$ = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject$.asObservable();
@@ -108,6 +110,7 @@ export class AuthService {
     localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     localStorage.removeItem(this.USER_INFO_KEY);
     this.isAuthenticatedSubject$.next(false);
+    this.router.navigate(['/auth/login']);
   }
 
   getAccessToken(): string | null {

@@ -70,7 +70,7 @@ export class Login implements OnInit {
       next: (success) => {
         this.isLoading = false;
         if (success) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/']);
         } else {
           this.errorMessage = 'Invalid username or password';
         }

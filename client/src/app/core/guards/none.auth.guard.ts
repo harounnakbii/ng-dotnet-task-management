@@ -1,15 +1,17 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { AuthService } from '../services/auth.service';
 
 export const NoneAuthGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
-
-  return true;
+  const router = inject(Router)
+ 
   if (!authService.getAccessToken()) {
     return true;
   }
-  // Rediriger vers Microsoft login
+  
+  router.navigate(['/']);
+
   return false;
 };

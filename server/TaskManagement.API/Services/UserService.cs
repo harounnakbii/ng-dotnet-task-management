@@ -72,7 +72,7 @@ public class UserService : IUserService
             return new UserValidationResult
             {
                 IsValid = false,
-                ErrorMessage = "Invalid email or password"
+                ErrorMessage = "Invalid username or password"
             };
         }
 
@@ -84,7 +84,7 @@ public class UserService : IUserService
             return new UserValidationResult
             {
                 IsValid = false,
-                ErrorMessage = "Invalid email or password"
+                ErrorMessage = "Invalid username or password"
             };
         }
 
