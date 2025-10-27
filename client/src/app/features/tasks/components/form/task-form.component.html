@@ -48,10 +48,25 @@
           [(ngModel)]="localTask.dueDate" 
           inputId="dueDate" 
           [showTime]="true" 
-          placeholder="Select due date"
+          [minDate]="minDate"
+          [touchUI]="false"
+          [showButtonBar]="true"
+          [selectionMode]="'single'"
+          placeholder="Select due date (optional)"
           dateFormat="dd/mm/yy"
           [showIcon]="true"
+          [iconDisplay]="'input'"
+          appendTo="body"
+          [class.p-invalid]="submitted && dueDateErrorMessage"
           class="w-full" />
+        <small class="error-message" *ngIf="dueDateErrorMessage">
+          <i class="pi pi-exclamation-circle"></i>
+          {{ dueDateErrorMessage }}
+        </small>
+        <small class="info-text" *ngIf="!dueDateErrorMessage">
+          <i class="pi pi-info-circle"></i>
+          Due date must be today or in the future
+        </small>
       </div>
 
       <!-- Status Field -->
@@ -64,6 +79,7 @@
           optionLabel="label" 
           optionValue="value" 
           placeholder="Select status"
+          appendTo="body"
           class="w-full" />
       </div>
 

@@ -40,7 +40,10 @@ export class TaskFormComponent implements OnChanges {
   // ===========================
   submitted: boolean = false;
   localTask: TaskDto = {};
-  
+
+  // Date minimale = maintenant
+  minDate: Date = new Date();
+
   statuses = [
     { label: 'Pending', value: false },
     { label: 'Completed', value: true }
@@ -90,7 +93,34 @@ export class TaskFormComponent implements OnChanges {
   // VALIDATION
   // ===========================
   isFormValid(): boolean {
-    return !!this.localTask.title?.trim();
+    const titleValid = !!this.localTask.title?.trim();
+    const dueDateValid = this.isDueDateValid();
+
+    return titleValid && dueDateValid;
+  }
+
+  isDueDateValid(): boolean {
+    // Si pas de due date, c'est valide (optionnel)
+    if (!this.localTask.dueDate) {
+      return true;
+    }
+
+    // Vérifier que la date est >= maintenant
+    const selectedDate = new Date(this.localTask.dueDate);
+    const now = new Date();
+
+    // Réinitialiser l'heure pour comparer uniquement les dates
+    now.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
+
+    return selectedDate >= now;
+  }
+
+  get dueDateErrorMessage(): string {
+    if (this.submitted && this.localTask.dueDate && !this.isDueDateValid()) {
+      return 'Due date cannot be in the past';
+    }
+    return '';
   }
 
   // ===========================
