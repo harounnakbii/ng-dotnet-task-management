@@ -1,0 +1,215 @@
+<!-- Toast for notifications -->
+<p-toast position="top-right" />
+
+<div class="task-list-container">
+  <!-- Toolbar -->
+  <p-toolbar styleClass="toolbar-custom">
+    <ng-template pTemplate="start">
+      <div class="toolbar-start">
+        <p-button label="New Task" icon="pi pi-plus" severity="success" (onClick)="openNew()" />
+        <p-button label="Delete Selected" icon="pi pi-trash" severity="danger" [outlined]="true"
+          (onClick)="deleteSelectedTasks()" [disabled]="!selectedTasks || !selectedTasks.length"
+          [badge]="selectedTasks.length > 0 ? selectedTasks.length.toString() : undefined" />
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="end">
+      <div class="toolbar-end">
+        <p-button icon="pi pi-refresh" severity="secondary" [outlined]="true" [rounded]="true" pTooltip="Refresh"
+          tooltipPosition="bottom" (onClick)="loadTasks(lastLazyLoadEvent)" />
+
+        <!-- Bouton pour exporter toutes les données -->
+        <p-button label="Export All" icon="pi pi-download" severity="info" [outlined]="true"
+          pTooltip="Export all tasks to CSV" tooltipPosition="bottom" (onClick)="exportAllData()"
+          [disabled]="totalRecords === 0" />
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- Table Card -->
+  <div class="table-card">
+    <p-table #dt [value]="tasks" [lazy]="true" (onLazyLoad)="loadTasks($event)" [paginator]="true" [rows]="10"
+      [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 20, 30, 50]" [tableStyle]="{ 'min-width': '75rem' }"
+      [(selection)]="selectedTasks" [rowHover]="true" dataKey="id"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tasks" [showCurrentPageReport]="true"
+      [globalFilterFields]="['title', 'description']" styleClass="p-datatable-gridlines p-datatable-striped"
+      responsiveLayout="scroll">
+
+      <!-- Caption -->
+      <ng-template pTemplate="caption">
+        <div class="table-header">
+          <div class="table-header-left">
+            <h2 class="table-title">
+              <i class="pi pi-list"></i>
+              Task Management
+            </h2>
+            <span class="table-subtitle">
+              Manage and track your tasks efficiently
+            </span>
+          </div>
+          <div class="table-header-right">
+            <p-iconfield iconPosition="left">
+              <p-inputicon styleClass="pi pi-search" />
+              <input pInputText type="text" (input)="onGlobalFilter($event)" placeholder="Search tasks..."
+                class="search-input" />
+            </p-iconfield>
+          </div>
+        </div>
+      </ng-template>
+
+      <!-- Header -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3rem">
+            <p-tableHeaderCheckbox />
+          </th>
+          <th pSortableColumn="title" style="min-width:18rem">
+            <div class="header-content">
+              <i class="pi pi-bookmark"></i>
+              Title
+              <p-sortIcon field="title" />
+            </div>
+          </th>
+          <th pSortableColumn="description" style="min-width:20rem">
+            <div class="header-content">
+              <i class="pi pi-align-left"></i>
+              Description
+              <p-sortIcon field="description" />
+            </div>
+          </th>
+          <th pSortableColumn="dueDate" style="min-width: 14rem">
+            <div class="header-content">
+              <i class="pi pi-calendar"></i>
+              Due Date
+              <p-sortIcon field="dueDate" />
+            </div>
+          </th>
+          <th pSortableColumn="isCompleted" style="min-width: 11rem">
+            <div class="header-content">
+              <i class="pi pi-info-circle"></i>
+              Status
+              <p-sortIcon field="isCompleted" />
+            </div>
+          </th>
+          <th pSortableColumn="createdAt" style="min-width: 14rem">
+            <div class="header-content">
+              <i class="pi pi-clock"></i>
+              Created At
+              <p-sortIcon field="createdAt" />
+            </div>
+          </th>
+          <th style="width: 12rem">
+            <div class="header-content">
+              <i class="pi pi-cog"></i>
+              Actions
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+
+      <!-- Body -->
+      <ng-template pTemplate="body" let-task>
+        <tr class="table-row" [class.overdue-row]="isOverdue(task)">
+          <td>
+            <p-tableCheckbox [value]="task" />
+          </td>
+          <td>
+            <div class="task-title">
+              <i class="pi pi-bookmark task-icon"></i>
+              <span class="title-text">{{ task.title }}</span>
+              <span class="overdue-badge" *ngIf="isOverdue(task)">
+                <i class="pi pi-exclamation-triangle"></i>
+                Overdue
+              </span>
+            </div>
+          </td>
+          <td>
+            <span class="description-text" [title]="task.description" [pTooltip]="task.description"
+              tooltipPosition="top">
+              {{ task.description || '-' }}
+            </span>
+          </td>
+          <td>
+            <div class="date-cell" [class.overdue-date]="isOverdue(task)">
+              <i class="pi pi-calendar"></i>
+              <span>{{ task.dueDate | date: 'dd/MM/yyyy HH:mm' }}</span>
+              <span class="days-info" *ngIf="!task.isCompleted && task.dueDate">
+                ({{ getDaysUntilDue(task) > 0 ? getDaysUntilDue(task) + ' days left' : 'overdue' }})
+              </span>
+            </div>
+          </td>
+          <td>
+            <div class="status-cell" (click)="toggleTaskCompletion(task)" style="cursor: pointer;">
+              <p-tag [value]="getStatusLabel(task.isCompleted)" [severity]="getStatusSeverity(task.isCompleted)"
+                [icon]="getStatusIcon(task.isCompleted)" [pTooltip]="'Click to toggle status'" tooltipPosition="top" />
+            </div>
+          </td>
+          <td>
+            <div class="date-cell">
+              <i class="pi pi-clock"></i>
+              <span>{{ task.createdAt | date: 'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <p-button icon="pi pi-eye" [rounded]="true" [outlined]="true" severity="secondary" size="small"
+                pTooltip="View Details" tooltipPosition="top" (onClick)="editTask(task)" />
+              <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" severity="info" size="small"
+                pTooltip="Edit" tooltipPosition="top" (onClick)="editTask(task)" />
+              <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" size="small"
+                pTooltip="Delete" tooltipPosition="top" (onClick)="deleteTask(task)" />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Empty Message -->
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">
+            <div class="empty-state">
+              <i class="pi pi-inbox empty-icon"></i>
+              <h3>No tasks found</h3>
+              <p>{{ searchTerm ? 'No tasks match your search criteria' : 'Create your first task to get started' }}</p>
+              <p-button label="Create Task" icon="pi pi-plus" severity="success" (onClick)="openNew()" />
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Loading Template -->
+      <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="7">
+            <div class="loading-state">
+              <i class="pi pi-spin pi-spinner loading-icon"></i>
+              <span>Loading tasks...</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+
+      <!-- Summary -->
+      <ng-template pTemplate="summary">
+        <div class="table-summary">
+          <div class="summary-item">
+            <i class="pi pi-list"></i>
+            <span><strong>{{ totalRecords }}</strong> task(s) in total</span>
+          </div>
+          <div class="summary-item" *ngIf="selectedTasks.length > 0">
+            <i class="pi pi-check-square"></i>
+            <span><strong>{{ selectedTasks.length }}</strong> selected</span>
+          </div>
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<!-- Task Form Dialog -->
+<app-task-form [(visible)]="taskDialogVisible" [task]="selectedTask" (onSave)="onTaskSave($event)"
+  (onCancel)="onTaskCancel()">
+</app-task-form>
+
+<!-- Confirmation Dialog -->
+<p-confirmdialog />

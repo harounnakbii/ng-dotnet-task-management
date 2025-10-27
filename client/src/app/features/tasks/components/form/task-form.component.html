@@ -1,0 +1,93 @@
+<p-dialog 
+  [(visible)]="visible"
+  (onHide)="onDialogHide()"
+  [header]="dialogHeader"
+  [modal]="true"
+  [style]="{ width: '500px' }"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="task-form-dialog">
+  
+  <ng-template pTemplate="content">
+    <div class="form-container">
+      <!-- Title Field -->
+      <div class="form-field">
+        <label for="title" class="field-label required">Title</label>
+        <input 
+          type="text" 
+          pInputText 
+          id="title" 
+          [(ngModel)]="localTask.title" 
+          required 
+          autofocus 
+          placeholder="Enter task title"
+          [class.p-invalid]="submitted && !localTask.title"
+          class="w-full" />
+        <small class="error-message" *ngIf="submitted && !localTask.title">
+          <i class="pi pi-exclamation-circle"></i>
+          Title is required.
+        </small>
+      </div>
+      
+      <!-- Description Field -->
+      <div class="form-field">
+        <label for="description" class="field-label">Description</label>
+        <textarea 
+          id="description" 
+          pTextarea 
+          [(ngModel)]="localTask.description" 
+          rows="4" 
+          placeholder="Enter task description (optional)"
+          class="w-full"></textarea>
+      </div>
+
+      <!-- Due Date Field -->
+      <div class="form-field">
+        <label for="dueDate" class="field-label">Due Date</label>
+        <p-datepicker 
+          [(ngModel)]="localTask.dueDate" 
+          inputId="dueDate" 
+          [showTime]="true" 
+          placeholder="Select due date"
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          class="w-full" />
+      </div>
+
+      <!-- Status Field -->
+      <div class="form-field">
+        <label for="isCompleted" class="field-label">Status</label>
+        <p-select 
+          [(ngModel)]="localTask.isCompleted" 
+          inputId="isCompleted" 
+          [options]="statuses" 
+          optionLabel="label" 
+          optionValue="value" 
+          placeholder="Select status"
+          class="w-full" />
+      </div>
+
+      <!-- Info Message for Edit Mode -->
+      <div class="info-message" *ngIf="isEditMode">
+        <i class="pi pi-info-circle"></i>
+        <span>You are editing an existing task</span>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <p-button 
+        label="Cancel" 
+        icon="pi pi-times" 
+        [text]="true"
+        severity="secondary"
+        (onClick)="cancel()" />
+      <p-button 
+        [label]="isEditMode ? 'Update' : 'Create'" 
+        icon="pi pi-check" 
+        (onClick)="save()"
+        [disabled]="submitted && !isFormValid()" />
+    </div>
+  </ng-template>
+</p-dialog>

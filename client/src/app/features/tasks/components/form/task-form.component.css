@@ -1,0 +1,209 @@
+/* ===========================
+   FORM CONTAINER
+   =========================== */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+/* ===========================
+   FORM FIELDS
+   =========================== */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field-label {
+  font-weight: 600;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+.field-label.required::after {
+  content: '*';
+  color: var(--red-500);
+  margin-left: 0.25rem;
+  font-size: 1rem;
+}
+
+/* ===========================
+   ERROR MESSAGES
+   =========================== */
+.error-message {
+  color: var(--red-500);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.error-message i {
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   INFO MESSAGE
+   =========================== */
+.info-message {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background-color: var(--blue-50);
+  border-left: 4px solid var(--blue-500);
+  border-radius: 4px;
+  color: var(--blue-700);
+  font-size: 0.9rem;
+}
+
+.info-message i {
+  font-size: 1.1rem;
+  color: var(--blue-500);
+}
+
+/* ===========================
+   DIALOG FOOTER
+   =========================== */
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+/* ===========================
+   PRIMENG OVERRIDES
+   =========================== */
+:host ::ng-deep {
+  .task-form-dialog {
+    .p-dialog-header {
+      background-color: var(--surface-50);
+      border-bottom: 1px solid var(--surface-300);
+      padding: 1.25rem 1.5rem;
+    }
+
+    .p-dialog-content {
+      padding: 1.5rem;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .p-dialog-footer {
+      border-top: 1px solid var(--surface-300);
+      padding: 1rem 1.5rem;
+      background-color: var(--surface-50);
+    }
+
+    .p-dialog-header-close {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+
+  /* Input invalid state */
+  .p-invalid {
+    border-color: var(--red-500) !important;
+  }
+
+  .p-invalid:focus {
+    box-shadow: 0 0 0 0.2rem var(--red-200) !important;
+  }
+
+  /* Full width utility */
+  .w-full {
+    width: 100% !important;
+  }
+
+  /* DatePicker */
+  .p-datepicker {
+    width: 100%;
+  }
+
+  /* Select */
+  .p-select {
+    width: 100%;
+  }
+
+  /* Textarea */
+  textarea.p-textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media screen and (max-width: 576px) {
+  :host ::ng-deep .task-form-dialog {
+    width: 95vw !important;
+    max-width: 95vw !important;
+
+    .p-dialog-content {
+      padding: 1rem;
+      max-height: 60vh;
+    }
+
+    .p-dialog-header,
+    .p-dialog-footer {
+      padding: 1rem;
+    }
+  }
+
+  .form-container {
+    gap: 1rem;
+  }
+
+  .dialog-footer {
+    flex-direction: column;
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-field {
+  animation: slideIn 0.3s ease-out;
+}
+
+.form-field:nth-child(1) { animation-delay: 0.05s; }
+.form-field:nth-child(2) { animation-delay: 0.1s; }
+.form-field:nth-child(3) { animation-delay: 0.15s; }
+.form-field:nth-child(4) { animation-delay: 0.2s; }
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+.field-label:focus-within {
+  color: var(--primary-color);
+}
+
+input:focus,
+textarea:focus,
+.p-select:focus-within,
+.p-datepicker:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
