@@ -30,7 +30,7 @@ export class AppMenu {
                     {
                         label: 'Task management',
                         icon: 'pi pi-fw pi-pencil',
-                        routerLink: ['/pages/crud']
+                        routerLink: ['/tasks']
                     }]
             },
             {

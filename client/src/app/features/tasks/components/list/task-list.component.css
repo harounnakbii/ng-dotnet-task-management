@@ -1,0 +1,557 @@
+/* ===========================
+   CONTAINER
+   =========================== */
+.task-list-container {
+  padding: 1.5rem;
+  background-color: var(--surface-ground);
+  min-height: 100vh;
+}
+
+/* ===========================
+   TOOLBAR
+   =========================== */
+:host ::ng-deep .toolbar-custom {
+  background: linear-gradient(135deg, var(--surface-card) 0%, var(--surface-50) 100%);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.toolbar-start,
+.toolbar-end {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+:host ::ng-deep .p-button.p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+}
+
+/* ===========================
+   TABLE CARD
+   =========================== */
+.table-card {
+  background: var(--surface-card);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* ===========================
+   TABLE HEADER
+   =========================== */
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid var(--surface-border);
+  margin-bottom: 1rem;
+}
+
+.table-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.table-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-title i {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+}
+
+.table-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-color-secondary);
+  margin-left: 2rem;
+}
+
+.table-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 320px;
+  border-radius: 8px;
+}
+
+/* ===========================
+   TABLE STYLES
+   =========================== */
+:host ::ng-deep .p-datatable {
+  .p-datatable-thead > tr > th {
+    background: linear-gradient(135deg, var(--surface-100) 0%, var(--surface-50) 100%);
+    font-weight: 600;
+    padding: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+    color: var(--text-color);
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .header-content i {
+    color: var(--primary-color);
+    font-size: 1rem;
+  }
+
+  .p-datatable-tbody > tr {
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--surface-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  .p-datatable-tbody > tr > td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--surface-border);
+  }
+
+  .p-paginator {
+    border-top: 1px solid var(--surface-border);
+    padding: 1rem;
+    background-color: var(--surface-50);
+  }
+}
+
+.table-row {
+  cursor: pointer;
+}
+
+.overdue-row {
+  background-color: rgba(239, 68, 68, 0.05) !important;
+}
+
+/* ===========================
+   CELL CONTENT
+   =========================== */
+.task-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.task-icon {
+  color: var(--primary-color);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.title-text {
+  color: var(--text-color);
+  font-size: 1rem;
+  flex: 1;
+}
+
+.overdue-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--red-100);
+  color: var(--red-700);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.overdue-badge i {
+  font-size: 0.75rem;
+}
+
+.description-text {
+  color: var(--text-color-secondary);
+  display: block;
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.5;
+}
+
+.date-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.date-cell i {
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.overdue-date {
+  color: var(--red-600);
+  font-weight: 600;
+}
+
+.overdue-date i {
+  color: var(--red-600);
+}
+
+.days-info {
+  font-size: 0.8rem;
+  color: var(--text-color-secondary);
+  font-style: italic;
+}
+
+.status-cell {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.status-cell:hover {
+  transform: scale(1.05);
+}
+
+/* ===========================
+   ACTION BUTTONS
+   =========================== */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+:host ::ng-deep .action-buttons .p-button {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+/* ===========================
+   TAG STYLES
+   =========================== */
+:host ::ng-deep .p-tag {
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+/* ===========================
+   EMPTY STATE
+   =========================== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  color: var(--text-color-secondary);
+  margin-bottom: 1.5rem;
+  opacity: 0.4;
+}
+
+.empty-state h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.empty-state p {
+  margin: 0 0 2rem 0;
+  color: var(--text-color-secondary);
+  font-size: 1rem;
+  max-width: 400px;
+}
+
+/* ===========================
+   LOADING STATE
+   =========================== */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  gap: 1rem;
+}
+
+.loading-icon {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.loading-state span {
+  color: var(--text-color-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ===========================
+   TABLE SUMMARY
+   =========================== */
+.table-summary {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: var(--surface-50);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color-secondary);
+  font-size: 0.95rem;
+}
+
+.summary-item i {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+.summary-item strong {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media screen and (max-width: 1200px) {
+  .search-input {
+    width: 250px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .table-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .table-header-right {
+    width: 100%;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+
+  .toolbar-start,
+  .toolbar-end {
+    flex-wrap: wrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .task-list-container {
+    padding: 1rem;
+  }
+
+  .table-card {
+    padding: 1rem;
+  }
+
+  :host ::ng-deep .toolbar-custom {
+    padding: 1rem;
+  }
+
+  .toolbar-start,
+  .toolbar-end {
+    flex-direction: column;
+    width: 100%;
+    
+    button {
+      width: 100%;
+    }
+  }
+
+  .table-title {
+    font-size: 1.35rem;
+  }
+
+  .table-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .action-buttons {
+    flex-direction: row;
+    gap: 0.25rem;
+  }
+
+  :host ::ng-deep .p-datatable {
+    font-size: 0.875rem;
+
+    .p-datatable-thead > tr > th,
+    .p-datatable-tbody > tr > td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+
+  .description-text {
+    max-width: 200px;
+  }
+
+  .table-summary {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .task-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .date-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .action-buttons {
+    justify-content: flex-start;
+  }
+
+  :host ::ng-deep .action-buttons .p-button {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.table-card {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.table-row {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* ===========================
+   PRINT STYLES
+   =========================== */
+@media print {
+  .toolbar-custom,
+  .action-buttons,
+  .table-header-right,
+  .p-paginator {
+    display: none !important;
+  }
+
+  .task-list-container {
+    padding: 0;
+  }
+
+  .table-card {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  :host ::ng-deep .p-datatable-thead > tr > th {
+    background: #f3f4f6 !important;
+    print-color-adjust: exact;
+  }
+}
+
+/* ===========================
+   DARK MODE SUPPORT
+   =========================== */
+@media (prefers-color-scheme: dark) {
+  .toolbar-custom {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .table-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .overdue-row {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+  }
+}
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+.task-title:focus-within,
+.status-cell:focus-within {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 0.2rem var(--primary-200);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .table-card,
+  :host ::ng-deep .toolbar-custom {
+    border-width: 2px;
+  }
+
+  .overdue-badge {
+    border: 2px solid var(--red-700);
+  }
+}

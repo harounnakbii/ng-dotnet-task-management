@@ -10,7 +10,9 @@ export const appRoutes: Routes = [
         component: AppLayout,
         canActivate : [ AuthGuard],
         children: [
-            { path: 'documentation', component: Documentation }
+            { path: '', loadChildren: () => import('./app/features/tasks/task.routes') },
+            { path: 'documentation', component: Documentation },
+            { path: 'tasks', loadChildren: () => import('./app/features/tasks/task.routes') }
         ]
     },
     { path: 'notfound', component: Notfound },

@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
-  const token = authService.getToken();
+  const token = authService.getAccessToken();
     
   // Cloner la requête avec ou sans token
   let authReq = req;
@@ -17,5 +17,5 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     }); 
   }
     
-  return next(authReq); // ← Passer la requête modifiée
+  return next(authReq); // Passer la requête modifiée
 };
